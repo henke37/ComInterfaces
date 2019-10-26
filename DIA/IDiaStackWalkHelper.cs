@@ -9,22 +9,25 @@ namespace DIA
     [ComImport, Guid("21F81B1B-C5BB-42A3-BC4F-CCBAA75B9F19"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IDiaStackWalkHelper
     {
-        /// <summary>
-        /// Gets or sets the value of a register.
-        /// </summary>
-        [DispId(1)]
-        ulong registerValue { get; set; }
+		/// <summary>
+		/// Gets or sets the value of a register.
+		/// </summary>
+		[DispId(1)]
+		[PreserveSig]
+		int registerValue_get([In]CV_HREG_e Index, [Out] out ulong retVal);
+		[PreserveSig]
+		int registerValue_put([In]CV_HREG_e Index, [In] ulong newVal);
 
-        /// <summary>
-        /// Reads a block of data from the executable's image in memory.
-        /// </summary>
-        /// <param name="type">A value from the <see cref="MemoryTypeEnum"/> enumeration specifying the type of memory to read.</param>
-        /// <param name="va">Virtual address in the image from which to begin reading.</param>
-        /// <param name="cbData">The size of the data buffer in bytes.</param>
-        /// <param name="pcbData">Returns the number of bytes actually read. If pbData is <c>null</c>, then this is the total number of bytes of data available.</param>
-        /// <param name="pbData">A buffer that is filled in with the memory read.</param>
-        /// <returns>If successful, returns S_OK; otherwise, returns an error code.</returns>
-        [PreserveSig]
+		/// <summary>
+		/// Reads a block of data from the executable's image in memory.
+		/// </summary>
+		/// <param name="type">A value from the <see cref="MemoryTypeEnum"/> enumeration specifying the type of memory to read.</param>
+		/// <param name="va">Virtual address in the image from which to begin reading.</param>
+		/// <param name="cbData">The size of the data buffer in bytes.</param>
+		/// <param name="pcbData">Returns the number of bytes actually read. If pbData is <c>null</c>, then this is the total number of bytes of data available.</param>
+		/// <param name="pbData">A buffer that is filled in with the memory read.</param>
+		/// <returns>If successful, returns S_OK; otherwise, returns an error code.</returns>
+		[PreserveSig]
         int readMemory(
             [In] MemoryTypeEnum type,
             [In] ulong va,
